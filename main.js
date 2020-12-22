@@ -1,4 +1,4 @@
-const info = document.querySelector('.info');
+const card = document.querySelector('.card');
 const input = document.getElementById('search');
 const colors = {
    fire: '#FDDFDF',
@@ -27,7 +27,6 @@ const fetchPokemon = async () => {
          .then(res=>res.json())
          ))
          .then (data => {
-            console.log(data);
          data.map(user=>{
             const pokemon = {
                name: user.name,
@@ -65,7 +64,23 @@ const pokemonCard = (pokemon) => {
          <p class='type'>Type: <span>${pokemon.type}</span></p>
       </div>
    `;
-   info.appendChild(el);
+   card.appendChild(el);
 }
 
 fetchPokemon();
+
+// search pokemons 
+
+input.addEventListener('keyup',(event)=>{
+   const inputValue = event.target.value.toUpperCase();
+   const elements = card.children;
+   for(var i=0; i<elements.length; i++){
+      let pokemonName = elements[i].getElementsByTagName('h3')[0].innerText;
+      if(pokemonName.toUpperCase().includes(inputValue)){
+         elements[i].style.display = ''
+      }else{
+         elements[i].style.display = 'none'
+      }
+   }
+})
+
